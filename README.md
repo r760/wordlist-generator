@@ -1,5 +1,5 @@
 ## wordlist-generator
-a simple wordlist generator written in C
+a simple wordlist generator written in C for Linux
 
 ### features
 - generates all possible combinations of characters for a given; alphabet, and word length
