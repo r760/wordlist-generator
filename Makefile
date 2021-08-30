@@ -9,5 +9,5 @@ CFLAGS=-Wall
 clean:
 	rm -rf wordlistGenerator
 
-wordlistGenerator:	wordlistGenerator.c
+wordlistGenerator:	wordlistGenerator.c wordlistGenerator.h
 	$(CC) $(CFLAGS) wordlistGenerator.c -o wordlistGenerator
