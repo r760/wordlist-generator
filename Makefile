@@ -1,13 +1,13 @@
-# makefile for wordlist-generator
+# Makefile for wgen
 #
-# usage: make wordlistGenerator
+# usage: make wgen
 # usage: make clean
 
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -g
 
 clean:
-	rm -rf wordlistGenerator
+	rm -rf wgen
 
-wordlistGenerator:	wordlistGenerator.c wordlistGenerator.h
-	$(CC) $(CFLAGS) wordlistGenerator.c -o wordlistGenerator
+wgen:	wgen.c
+	$(CC) $(CFLAGS) wgen.c -o wgen
