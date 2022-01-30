@@ -6,22 +6,24 @@
 FILE *out;
 char *fname, *alphabet = "";
 int min = 0, max = 0, counter = 0;
-unsigned long now = 0;
+size_t now = 0;
 
-char *expand(char *s1, char *s2) {
+char *expand(char *s1, char *s2)
+{
     char *s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
     strcpy(s3, s1);
     strcat(s3, s2);
     return s3;
 }
 
-void generate(int i, int len, char *combination) {
+void generate(int i, int len, char *combination)
+{
     if (i >= len) {
         fprintf(out, "%s\n", combination);
-        now++;
         free(combination);
+        now++;
     } else {
-        int j;
+        int j = 0;
         for (j = 0; j < strlen(alphabet); j++) {
             char temp[1];
             temp[0] = alphabet[j];
@@ -30,8 +32,8 @@ void generate(int i, int len, char *combination) {
     }
 }
 
-int main(int argc, char *argv[]) {
-
+int main(int argc, char *argv[])
+{
     char *combination = "";
 
     if (argc == 1) {
@@ -62,17 +64,17 @@ int main(int argc, char *argv[]) {
                 alphabet = expand(alphabet, " ");
                 counter++;
             } else if (strcmp(argv[j], "-a") == 0) {
-                assert((j + 1) < argc && "You must provide APPEND after -a");
+                assert((j + 1) < argc && "You must provide \"CHARACTERS\" after -a");
                 alphabet = expand(alphabet, argv[j + 1]);
                 counter++;
             }
         }
 
+        assert(out != NULL && "You must provide -o OUT");
         assert(min >= 1 && "You must provide -min MIN");
         assert(max >= 1 && "You must provide -max MAX");
-        assert(min <= max && "MIN must be smaller or equal MAX");
+        assert(min <= max && "MIN must be smaller then or equal to MAX");
         assert(counter >= 1 && "You must provide at least one of -d -l -L -s -a");
-        assert(out != NULL && "You must provide -o OUT");
 
         printf("Minimum word length set to %d\n", min);
         printf("Maximum word length set to %d\n", max);
