@@ -3,44 +3,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-FILE *out;
-char *fname, *alphabet = "";
-int min = 0, max = 0, counter = 0;
-size_t now = 0;
-
-char *expand(char *s1, char *s2)
-{
+char *expand(char *s1, char *s2) {
     char *s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
     strcpy(s3, s1);
     strcat(s3, s2);
     return s3;
 }
 
-void generate(int i, int len, char *combination)
-{
+void generate(size_t i, size_t len, size_t *now, char *alphabet,
+        char *combination, FILE *out) {
     if (i >= len) {
         fprintf(out, "%s\n", combination);
         free(combination);
-        now++;
+        *now = *now + 1;
     } else {
-        int j = 0;
-        for (j = 0; j < strlen(alphabet); j++) {
+        for (int j = 0; j < strlen(alphabet); j++) {
             char temp[1];
             temp[0] = alphabet[j];
-            generate(i + 1, len, expand(combination, temp));
+            generate(i + 1, len, now, alphabet, expand(combination, temp), out);
         }
     }
 }
 
-int main(int argc, char *argv[])
-{
-    char *combination = "";
+int main(int argc, char *argv[]) {
+    FILE *out;
+    char *alphabet = "", *combination = "", *fname = "";
+    size_t min = 0, max = 0, counter = 0, now = 0;
 
-    if (argc == 1) {
-        printf("Please view the man page\n");
-    } else {
-        int j;
-        for (j = 1; j < argc; j++) {
+    if (argc >= 2) {
+        for (int j = 1; j < argc; j++) {
             if (strcmp(argv[j], "-o") == 0) {
                 assert((j + 1) < argc && "You must provide OUT after -o");
                 fname = argv[j + 1];
@@ -76,16 +67,18 @@ int main(int argc, char *argv[])
         assert(min <= max && "MIN must be smaller then or equal to MAX");
         assert(counter >= 1 && "You must provide at least one of -d -l -L -s -a");
 
-        printf("Minimum word length set to %d\n", min);
-        printf("Maximum word length set to %d\n", max);
+        printf("Minimum word length set to %ld\n", min);
+        printf("Maximum word length set to %ld\n", max);
         printf("Alphabet set to [%s]\n\n", alphabet);
 
-        for (int len = min; len <= max; len++) {
-            generate(0, len, combination);
+        for (size_t len = min; len <= max; len++) {
+            generate(0, len, &now, alphabet, combination, out);
         }
 
         printf("Wrote %lu words(s) to file named %s\n", now, fname);
         fclose(out);
         return 0;
+    } else {
+        printf("You must provide required arguments, please view the man page\n");
     }
 }

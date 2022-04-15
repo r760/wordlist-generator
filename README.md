@@ -14,5 +14,10 @@ make wgen
 
 ### How can I access the manual ?
 ```
-man ./wgen.1
+make man
+```
+
+### How can I view all the make directives ?
+```
+make help
 ```
