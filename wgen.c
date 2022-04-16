@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *expand(char *s1, char *s2) {
+char *expand(char *s1, char *s2)
+{
     char *s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
     strcpy(s3, s1);
     strcat(s3, s2);
@@ -11,7 +12,8 @@ char *expand(char *s1, char *s2) {
 }
 
 void generate(size_t i, size_t len, size_t *now, char *alphabet,
-        char *combination, FILE *out) {
+        char *combination, FILE *out)
+{
     if (i >= len) {
         fprintf(out, "%s\n", combination);
         free(combination);
@@ -25,7 +27,8 @@ void generate(size_t i, size_t len, size_t *now, char *alphabet,
     }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     FILE *out;
     char *alphabet = "", *combination = "", *fname = "";
     size_t min = 0, max = 0, counter = 0, now = 0;
