@@ -1,4 +1,4 @@
-.TH man 1 "April 2022" "1.2" "wgen"
+.TH man 1 "May 2022" "1.3" "wgen"
 .SH NAME
 wgen \- wordlist generator
 .SH SYNOPSIS
@@ -40,7 +40,5 @@ wgen -o OUT -min MIN -max MAX [-d, -l, -L, -s, -a]
 Generate all possible words of length five, with alphabet {0..9, $, ^}, and write results to a file name wordlist.txt.
 
 wgen -o wordlist.txt -min 5 -max 5 -d -a "&^"
-.SH BUGS
-Memory leaks.
 .SH AUTHOR
 Richard (https://github.com/r760)
