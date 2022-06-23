@@ -1,17 +1,37 @@
 CC=gcc
 CFLAGS=-Wall -g
 
+INCLUDEDIR=include
+SRCDIR=src
+LIBDIR=lib
+BINDIR=bin
+CUTILSDIR=cutils
+
+CFLAGS+=-I$(INCLUDEDIR)
+CFLAGS+=-L$(LIBDIR)
+
 help:	Makefile
-	@sed -n 's/^##[ ]*//p' $<
+	@sed -n 's/^##[ ]*/\n/p' $< | sed 's/: /:\n\t/g; 1d'
 
-## clean:	remove wgen binary
+## clean: remove cutils, include, lib, and bin dirs (and everything inside)
 clean:
-	rm -rf wgen
+	rm -rf $(CUTILSDIR) $(INCLUDEDIR) $(LIBDIR) $(BINDIR) &> /dev/null || true
 
-## man:	open wgen's man page
-man:	wgen.1
-	man ./wgen.1
+## man: open wgen's man page
+man:	share/man/wgen.1
+	man share/man/wgen.1
 
-## wgen:	compile wgen
-wgen:	wgen.c
-	${CC} ${CFLAGS} $^ -o wgen
+cutils:
+	git clone https://github.com/r760/cutils.git
+	cd $(CUTILSDIR); make
+
+## bin/wgen: compile wgen
+$(BINDIR)/wgen:	$(SRCDIR)/wgen.c
+	make clean
+	make cutils
+	mkdir $(INCLUDEDIR)
+	cp $(CUTILSDIR)/$(INCLUDEDIR)/log.h $(INCLUDEDIR)
+	mkdir $(LIBDIR)
+	cp $(CUTILSDIR)/lib/liblog.a $(LIBDIR)
+	mkdir $(BINDIR)
+	${CC} ${CFLAGS} $^ -llog -o $(BINDIR)/wgen
