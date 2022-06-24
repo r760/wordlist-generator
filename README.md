@@ -19,5 +19,5 @@ make man
 
 ### How can I view all the make directives ?
 ```
-make
+make help
 ```

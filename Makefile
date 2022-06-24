@@ -23,7 +23,7 @@ man:	share/man/wgen.1
 
 cutils:
 	git clone https://github.com/r760/cutils.git
-	cd $(CUTILSDIR); make
+	cd $(CUTILSDIR); make $(LIBDIR)/liblog.a
 
 ## bin/wgen: compile wgen
 $(BINDIR)/wgen:	$(SRCDIR)/wgen.c
@@ -35,3 +35,7 @@ $(BINDIR)/wgen:	$(SRCDIR)/wgen.c
 	cp $(CUTILSDIR)/lib/liblog.a $(LIBDIR)
 	mkdir $(BINDIR)
 	${CC} ${CFLAGS} $^ -llog -o $(BINDIR)/wgen
+
+## example: an example of how to run wgen
+example:	$(BINDIR)/wgen
+	$(BINDIR)/wgen -o wordlist.txt -min 3 -max 3 -c "ABC"
