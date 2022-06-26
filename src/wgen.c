@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
     if (argc >= 2) {
         for (int j = 1; j < argc; j++) {
             if (strcmp(argv[j], "-o") == 0) {
-                LOG_ERROR((j + 1) < argc, "You must provide OUT after -o");
+                LOG_ERROR((j + 1) < argc, error, "You must provide OUT after -o");
                 fname = argv[j + 1];
                 out = fopen(fname, "w");
             } else if (strcmp(argv[j], "-min") == 0) {
-                LOG_ERROR((j + 1) < argc, "You must provide MIN after -min");
+                LOG_ERROR((j + 1) < argc, error, "You must provide MIN after -min");
                 min = atoi(argv[j + 1]);
             } else if (strcmp(argv[j], "-max") == 0) {
-                LOG_ERROR((j + 1) < argc, "You must provide MAX after -max");
+                LOG_ERROR((j + 1) < argc, error, "You must provide MAX after -max");
                 max = atoi(argv[j + 1]);
             } else if (strcmp(argv[j], "-d") == 0) {
                 char *back_ptr = alphabet;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
                 }
                 counter++;
             } else if (strcmp(argv[j], "-c") == 0) {
-                LOG_ERROR((j + 1) < argc, "You must provide \"CHARACTERS\" after -c");
+                LOG_ERROR((j + 1) < argc, error, "You must provide \"CHARACTERS\" after -c");
                 char *back_ptr = alphabet;
                 alphabet = expand(alphabet, argv[j + 1]);
                 if (back_ptr != NULL) {
@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
             } 
         }
 
-        LOG_ERROR(out != NULL, "You must provide -o OUT");
-        LOG_ERROR(min >= 1, "You must provide -min MIN");
-        LOG_ERROR(max >= 1, "You must provide -max MAX");
-        LOG_ERROR(min <= max, "MIN must be smaller then or equal to MAX");
-        LOG_ERROR(counter >= 1, "You must provide at least one of -d -l -L -s -c");
+        LOG_ERROR(out != NULL, error, "You must provide -o OUT");
+        LOG_ERROR(min >= 1, error, "You must provide -min MIN");
+        LOG_ERROR(max >= 1, error, "You must provide -max MAX");
+        LOG_ERROR(min <= max, error, "MIN must be smaller then or equal to MAX");
+        LOG_ERROR(counter >= 1, error, "You must provide at least one of -d -l -L -s -c");
 
         LOG_INFO("Minimum word length set to '%ld'", min);
         LOG_INFO("Maximum word length set to '%ld'", max);
