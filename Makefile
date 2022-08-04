@@ -41,12 +41,12 @@ install:	$(BINDIR)/wgen $(MANDIR)/wgen.1
 	cd $(BINDIR); find . -type f -exec sudo cp -v {} /usr/local/bin/ \;
 	cd $(MANDIR); find . -type f -name "*.1" -exec sudo cp -v {} /usr/local/man/man1/ \;
 
-## uninstall: remove wgen binary and man file
+## uninstall: uninstall wgen binary and man file
 uninstall:	$(BINDIR)/wgen $(MANDIR)/wgen.1
 	cd $(BINDIR); find . -type f -exec sudo rm -v /usr/local/bin/{} \;
 	cd $(MANDIR); find . -type f -name "*.1" -exec sudo rm -v /usr/local/man/man1/{} \;
 
-## clean: include, lib, and bin dirs (and everything inside)
+## clean: clean cutils, remove include, lib, and bin dirs (and everything inside)
 clean:
 	[ -d $(CUTILSDIR) ] && cd $(CUTILSDIR) && make clean || true
 	rm -rf $(INCLUDEDIR) $(LIBDIR) $(BINDIR) &> /dev/null || true
